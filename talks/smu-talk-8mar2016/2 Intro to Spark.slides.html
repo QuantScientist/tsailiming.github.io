@@ -338,9 +338,9 @@ a.anchor-link {
 
 <span class="kn">import</span> <span class="nn">py4j</span>
 
-<span class="n">conf</span> <span class="o">=</span> <span class="n">SparkConf</span><span class="p">()</span><span class="o">.</span><span class="n">setAppName</span><span class="p">(</span><span class="s2">&quot;SparkJupyterTitanic&quot;</span><span class="p">)</span> \
+<span class="n">conf</span> <span class="o">=</span> <span class="n">SparkConf</span><span class="p">()</span><span class="o">.</span><span class="n">setAppName</span><span class="p">(</span><span class="s2">&quot;IntroSparkJupyter&quot;</span><span class="p">)</span> \
          <span class="o">.</span><span class="n">setMaster</span><span class="p">(</span><span class="s2">&quot;local[2]&quot;</span><span class="p">)</span> 
-<span class="c1"># conf = SparkConf().setAppName(&quot;SparkJupyterTitanic&quot;) \</span>
+<span class="c1"># conf = SparkConf().setAppName(&quot;IntroSparkJupyter&quot;) \</span>
 <span class="c1">#         .setMaster(&quot;yarn-client&quot;) \</span>
 <span class="c1">#         .set(&quot;spark.executor.memory&quot;, &quot;512m&quot;) \</span>
 <span class="c1">#         .set(&quot;spark.executor.cores&quot;, 1) \</span>
@@ -370,7 +370,7 @@ a.anchor-link {
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;pyspark.context.SparkContext at 0x1130cbfd0&gt;</pre>
+<pre>&lt;pyspark.context.SparkContext at 0x10ed7df90&gt;</pre>
 </div>
 
 </div>
@@ -598,17 +598,36 @@ a.anchor-link {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">random</span>
-<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">y</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="mi">0</span>
-<span class="n">n</span> <span class="o">=</span> <span class="mi">1000000</span>
-<span class="n">count</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">add</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Pi is roughly </span><span class="si">%f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="mf">4.0</span> <span class="o">*</span> <span class="n">count</span> <span class="o">/</span> <span class="n">n</span><span class="p">))</span>
+<div class=" highlight hl-ipython2"><pre><span class="c1"># Calculating Pi with the Monte Carlo method</span>
+<span class="c1"># https://learntofish.wordpress.com/2010/10/13/calculating-pi-with-the-monte-carlo-method/</span>
+
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">math</span>
+ 
+<span class="k">def</span> <span class="nf">withinCircle</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">y</span><span class="o">**</span><span class="mi">2</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">True</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">False</span>
+ 
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">circleArea</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">squareArea</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">pi</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1000000</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">withinCircle</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="o">==</span><span class="mi">1</span><span class="p">):</span>
+                   <span class="n">circleArea</span><span class="o">=</span><span class="n">circleArea</span><span class="o">+</span><span class="mi">1</span>
+        <span class="n">squareArea</span><span class="o">=</span><span class="n">squareArea</span><span class="o">+</span><span class="mi">1</span>
+    <span class="n">pi</span> <span class="o">=</span> <span class="mf">4.0</span><span class="o">*</span><span class="n">circleArea</span><span class="o">/</span><span class="n">squareArea</span>
+    <span class="k">print</span> <span class="s2">&quot;Approximate value for pi: &quot;</span><span class="p">,</span> <span class="n">pi</span>
+    <span class="k">print</span> <span class="s2">&quot;Difference to exact value of pi: &quot;</span><span class="p">,</span> <span class="n">pi</span><span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span>
+    <span class="k">print</span> <span class="s2">&quot;Error: (approx-exact)/exact=&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">pi</span><span class="o">-</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">/</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;%&quot;</span>
+<span class="n">main</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -621,7 +640,61 @@ a.anchor-link {
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Pi is roughly 3.140120
+<pre>Approximate value for pi:  3.14458
+Difference to exact value of pi:  0.00298734641021
+Error: (approx-exact)/exact= 0.0950901895824 %
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="images/circle_and_square.png" alt="">
+<img src="images/Screen Shot 2016-03-07 at 9.40.45 pm.png" alt="">
+<img src="images/pythagoras-theorem.gif" alt=""></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">random</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">_</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span> 
+    <span class="n">y</span> <span class="o">=</span> <span class="n">random</span><span class="p">()</span> 
+    <span class="k">if</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">y</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span> 
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    
+<span class="n">n</span> <span class="o">=</span> <span class="mi">1000000</span>
+<span class="n">count</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="p">(</span><span class="nb">xrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">add</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s2">&quot;Pi is roughly {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span> <span class="mf">4.0</span> <span class="o">*</span> <span class="n">count</span> <span class="o">/</span> <span class="n">n</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Pi is roughly 3.141916
 </pre>
 </div>
 </div>
