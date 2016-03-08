@@ -1,64 +1,10 @@
-
 <!DOCTYPE html>
 <html>
-<head>
-
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="chrome=1" />
-
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
-<title>1 EMR Setup slides</title>
+<head><meta charset="utf-8" />
+<title>4 Who will Survive?</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-<!-- General and theme style sheets -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.2.0/css/reveal.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.2.0/css/theme/simple.css" id="theme">
-
-<!-- If the query includes 'print-pdf', include the PDF print sheet -->
-<script>
-if( window.location.search.match( /print-pdf/gi ) ) {
-        var link = document.createElement( 'link' );
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = 'https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.2.0/css/print/pdf.css';
-        document.getElementsByTagName( 'head' )[0].appendChild( link );
-}
-
-</script>
-
-<!--[if lt IE 9]>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.2.0/lib/js/html5shiv.js"></script>
-<![endif]-->
-
-<!-- Loading the mathjax macro -->
-<!-- Load mathjax -->
-    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
-    <!-- MathJax configuration -->
-    <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-            processEscapes: true,
-            processEnvironments: true
-        },
-        // Center justify equations in code and markdown cells. Elsewhere
-        // we use CSS to left justify single line equations in code cells.
-        displayAlign: 'center',
-        "HTML-CSS": {
-            styles: {'.MathJax_Display': {"margin": 0}},
-            linebreaks: { automatic: true }
-        }
-    });
-    </script>
-    <!-- End of mathjax configuration -->
-
-<!-- Get Font-awesome from cdn -->
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css">
 
 <style type="text/css">
     /*!
@@ -170,297 +116,590 @@ if( window.location.search.match( /print-pdf/gi ) ) {
 
 <style type="text/css">
 /* Overrides of notebook CSS for static HTML export */
-.reveal {
-  font-size: 160%;
-  overflow-y: scroll;
+body {
+  overflow: visible;
+  padding: 8px;
 }
-.reveal pre {
-  width: inherit;
-  padding: 0.4em;
-  margin: 0px;
-  font-family: monospace, sans-serif;
-  font-size: 80%;
-  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+
+div#notebook {
+  overflow: visible;
+  border-top: none;
 }
-.reveal pre code {
-  padding: 0px;
-}
-.reveal section img {
-  border: 0px solid black;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0);
-}
-.reveal i {
-  font-style: normal;
-  font-family: FontAwesome;
-  font-size: 2em;
-}
-.reveal .slides {
-  text-align: left;
-}
-.reveal.fade {
-  opacity: 1;
-}
-.reveal .progress {
-  position: static;
-}
-div.input_area {
-  padding: 0.06em;
-}
-div.code_cell {
-  background-color: transparent;
-}
-div.prompt {
-  width: 11ex;
-  padding: 0.4em;
-  margin: 0px;
-  font-family: monospace, sans-serif;
-  font-size: 80%;
-  text-align: right;
-}
-div.output_area pre {
-  font-family: monospace, sans-serif;
-  font-size: 80%;
-}
-div.output_prompt {
-  /* 5px right shift to account for margin in parent container */
-  margin: 5px 5px 0 0;
-}
-div.text_cell.rendered .rendered_html {
-  /* The H1 height seems miscalculated, we are just hidding the scrollbar */
-  overflow-y: hidden;
-}
-a.anchor-link {
-  /* There is still an anchor, we are only hidding it */
-  display: none;
-}
-.rendered_html p {
-  text-align: inherit;
+
+@media print {
+  div.cell {
+    display: block;
+    page-break-inside: avoid;
+  } 
+  div.output_wrapper { 
+    display: block;
+    page-break-inside: avoid; 
+  }
+  div.output { 
+    display: block;
+    page-break-inside: avoid; 
+  }
 }
 </style>
 
 <!-- Custom stylesheet, it must be in the same directory as the html file -->
 <link rel="stylesheet" href="custom.css">
 
-</head>
-
+<!-- Loading mathjax macro -->
+<!-- Load mathjax -->
+    <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+    <!-- MathJax configuration -->
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+            processEscapes: true,
+            processEnvironments: true
+        },
+        // Center justify equations in code and markdown cells. Elsewhere
+        // we use CSS to left justify single line equations in code cells.
+        displayAlign: 'center',
+        "HTML-CSS": {
+            styles: {'.MathJax_Display': {"margin": 0}},
+            linebreaks: { automatic: true }
+        }
+    });
+    </script>
+    <!-- End of mathjax configuration --></head>
 <body>
-<div class="reveal">
-<div class="slides">
-<section><section>
+  <div tabindex="-1" id="notebook" class="border-box-sizing">
+    <div class="container" id="notebook-container">
+
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="EMR-Hands-On-Setup">EMR Hands-On Setup<a class="anchor-link" href="#EMR-Hands-On-Setup">&#182;</a></h1><ul>
-<li>You will need your AWS Access Key ID and Secret Access Key</li>
-<li>You will need to have a default SSH key pair configured for AWS instances</li>
-</ul>
+<p><img src="images/lifeboat-around-Titanic.jpg" alt="Lifeboat"></p>
 
 </div>
 </div>
-</div></section></section><section><section>
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Step-1">Step 1<a class="anchor-link" href="#Step-1">&#182;</a></h1><p>SSH into an EC2 instance that I have prepared</p>
-<p><code>$ ssh smu@&lt;I_WILL_GIVE_YOU_THE_IP&gt;</code></p>
-<p>Password is <code>smutalk</code></p>
+<h1 id="What-is-Logistic-Regression?">What is Logistic Regression?<a class="anchor-link" href="#What-is-Logistic-Regression?">&#182;</a></h1><p><div align=center>$y = m x + b$</div>
+<img src="images/lgJON.gif" alt=""></p>
+<p><img src="images/NcMaQ.gif" alt=""></p>
 
 </div>
 </div>
-</div></section></section><section><section>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">os</span>
+<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s1">&#39;PYSPARK_SUBMIT_ARGS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;--packages com.databricks:spark-csv_2.10:1.3.0 pyspark-shell&quot;</span>
+
+<span class="kn">from</span> <span class="nn">pyspark</span> <span class="kn">import</span> <span class="n">SparkContext</span><span class="p">,</span> <span class="n">SparkConf</span><span class="p">,</span> <span class="n">StorageLevel</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SQLContext</span><span class="p">,</span> <span class="n">HiveContext</span>
+<span class="kn">import</span> <span class="nn">py4j</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+
+<span class="n">conf</span> <span class="o">=</span> <span class="n">SparkConf</span><span class="p">()</span><span class="o">.</span><span class="n">setAppName</span><span class="p">(</span><span class="s2">&quot;SparkJupyterTitanic&quot;</span><span class="p">)</span> \
+        <span class="o">.</span><span class="n">setMaster</span><span class="p">(</span><span class="s2">&quot;yarn-client&quot;</span><span class="p">)</span> \
+        <span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;spark.executor.memory&quot;</span><span class="p">,</span> <span class="s2">&quot;4g&quot;</span><span class="p">)</span> \
+        <span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;spark.executor.cores&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> \
+        <span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s2">&quot;spark.executor.instances&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># 2 ==&gt; 4</span>
+        
+<span class="n">sc</span> <span class="o">=</span> <span class="n">SparkContext</span><span class="p">(</span><span class="n">conf</span><span class="o">=</span><span class="n">conf</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Try to access HiveConf, it will raise exception if Hive is not added</span>
+    <span class="n">sc</span><span class="o">.</span><span class="n">_jvm</span><span class="o">.</span><span class="n">org</span><span class="o">.</span><span class="n">apache</span><span class="o">.</span><span class="n">hadoop</span><span class="o">.</span><span class="n">hive</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">HiveConf</span><span class="p">()</span>
+    <span class="n">sqlContext</span> <span class="o">=</span> <span class="n">HiveContext</span><span class="p">(</span><span class="n">sc</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">py4j</span><span class="o">.</span><span class="n">protocol</span><span class="o">.</span><span class="n">Py4JError</span><span class="p">:</span>
+    <span class="n">sqlContext</span> <span class="o">=</span> <span class="n">SQLContext</span><span class="p">(</span><span class="n">sc</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+    <span class="n">sqlContext</span> <span class="o">=</span> <span class="n">SQLContext</span><span class="p">(</span><span class="n">sc</span><span class="p">)</span>
+<span class="n">sc</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[1]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;pyspark.context.SparkContext at 0x7fae2c2a31d0&gt;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">csv</span> <span class="o">=</span> <span class="s2">&quot;s3n://ltsai/smu-talk-8mar2016/csv/titanic3.csv&quot;</span> <span class="c1"># 1.3K rows</span>
+<span class="c1">#csv = &quot;s3n://ltsai/smu-talk-8mar2016/csv/1.csv&quot; # There are 2 CSV, each is 1GB. ~13M rows </span>
+<span class="c1">#csv = &quot;s3n://ltsai/smu-talk-8mar2016/csv/*.csv&quot; </span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">pyspark.sql.types</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">customSchema</span> <span class="o">=</span> <span class="n">StructType</span><span class="p">([</span><span class="n">StructField</span><span class="p">(</span><span class="s1">&#39;pclass&#39;</span><span class="p">,</span> <span class="n">StringType</span><span class="p">(),</span> <span class="bp">True</span><span class="p">),</span>
+                           <span class="n">StructField</span><span class="p">(</span><span class="s1">&#39;survived&#39;</span><span class="p">,</span> <span class="n">IntegerType</span><span class="p">(),</span> <span class="bp">True</span><span class="p">),</span>
+                           <span class="n">StructField</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">StringType</span><span class="p">(),</span> <span class="bp">True</span><span class="p">),</span>
+                           <span class="n">StructField</span><span class="p">(</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="n">StringType</span><span class="p">(),</span> <span class="bp">True</span><span class="p">),</span>
+                           <span class="n">StructField</span><span class="p">(</span><span class="s1">&#39;age&#39;</span><span class="p">,</span> <span class="n">StringType</span><span class="p">(),</span> <span class="bp">True</span><span class="p">),</span>
+                           <span class="n">StructField</span><span class="p">(</span><span class="s1">&#39;sibsp&#39;</span><span class="p">,</span> <span class="n">IntegerType</span><span class="p">(),</span> <span class="bp">True</span><span class="p">),</span>
+                           <span class="n">StructField</span><span class="p">(</span><span class="s1">&#39;parch&#39;</span><span class="p">,</span> <span class="n">IntegerType</span><span class="p">(),</span> <span class="bp">True</span><span class="p">),</span>
+                           <span class="n">StructField</span><span class="p">(</span><span class="s1">&#39;ticket&#39;</span><span class="p">,</span> <span class="n">StringType</span><span class="p">(),</span> <span class="bp">True</span><span class="p">),</span>
+                           <span class="n">StructField</span><span class="p">(</span><span class="s1">&#39;fare&#39;</span><span class="p">,</span> <span class="n">FloatType</span><span class="p">(),</span> <span class="bp">True</span><span class="p">),</span>
+                           <span class="n">StructField</span><span class="p">(</span><span class="s1">&#39;cabin&#39;</span><span class="p">,</span> <span class="n">StringType</span><span class="p">(),</span> <span class="bp">True</span><span class="p">),</span>
+                           <span class="n">StructField</span><span class="p">(</span><span class="s1">&#39;embarked&#39;</span><span class="p">,</span> <span class="n">StringType</span><span class="p">(),</span> <span class="bp">True</span><span class="p">),</span>
+                           <span class="n">StructField</span><span class="p">(</span><span class="s1">&#39;boat&#39;</span><span class="p">,</span> <span class="n">StringType</span><span class="p">(),</span> <span class="bp">True</span><span class="p">),</span>
+                           <span class="n">StructField</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="n">StringType</span><span class="p">(),</span> <span class="bp">True</span><span class="p">),</span>
+                           <span class="n">StructField</span><span class="p">(</span><span class="s1">&#39;home.dest&#39;</span><span class="p">,</span> <span class="n">StringType</span><span class="p">(),</span> <span class="bp">True</span><span class="p">)])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">sqlContext</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s1">&#39;com.databricks.spark.csv&#39;</span><span class="p">)</span><span class="o">.</span> \
+        <span class="n">options</span><span class="p">(</span><span class="n">header</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">,</span> <span class="n">treatEmptyValuesAsNulls</span><span class="o">=</span><span class="s1">&#39;true&#39;</span><span class="p">)</span><span class="o">.</span> \
+        <span class="n">load</span><span class="p">(</span><span class="n">csv</span><span class="p">,</span> <span class="n">schema</span> <span class="o">=</span> <span class="n">customSchema</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">train_df</span><span class="p">,</span> <span class="n">test_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">&quot;survived&quot;</span><span class="p">,</span> <span class="s2">&quot;pclass&quot;</span><span class="p">,</span> <span class="s2">&quot;sibsp&quot;</span><span class="p">,</span> <span class="s2">&quot;parch&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">randomSplit</span><span class="p">([</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">])</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">Row</span>
+<span class="kn">from</span> <span class="nn">pyspark.mllib.linalg</span> <span class="kn">import</span> <span class="n">Vectors</span>
+
+<span class="n">ntrain</span> <span class="o">=</span> <span class="n">train_df</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">Row</span><span class="p">(</span><span class="n">label</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> \
+         <span class="p">,</span><span class="n">features</span> <span class="o">=</span> <span class="n">Vectors</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:])))</span><span class="o">.</span><span class="n">toDF</span><span class="p">()</span><span class="o">.</span><span class="n">persist</span><span class="p">(</span><span class="n">StorageLevel</span><span class="o">.</span><span class="n">MEMORY_AND_DISK</span><span class="p">)</span> 
+<span class="n">ntest</span> <span class="o">=</span> <span class="n">test_df</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">Row</span><span class="p">(</span><span class="n">features</span> <span class="o">=</span> <span class="n">Vectors</span><span class="o">.</span><span class="n">dense</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:])))</span><span class="o">.</span><span class="n">toDF</span><span class="p">()</span>
+
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+<span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="k">print</span> <span class="n">ntrain</span><span class="o">.</span><span class="n">count</span><span class="p">(),</span> <span class="n">ntest</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+
+<span class="c1"># 10471301 2618699</span>
+<span class="c1"># Time Taken 220.47 seconds (1 CSV)</span>
+<span class="c1"># Time Taken 436.52 seconds (2 CSV)</span>
+
+<span class="c1"># After scaling 6 =&gt; 12 cores</span>
+<span class="c1"># Time Taken 150.24 seconds (1 CSV)</span>
+<span class="c1"># Time Taken 227.63 seconds (2 CSV)</span>
+<span class="k">print</span> <span class="s1">&#39;Time Taken &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39; seconds&#39;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>20946346 5233654
+Time Taken 436.52 seconds
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">from</span> <span class="nn">pyspark.ml.classification</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">maxIter</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">ntrain</span><span class="p">)</span>
+<span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+
+<span class="c1"># Time Taken 18.55 seconds (1 CSV)</span>
+<span class="c1"># Time Taken 62.42 seconds (2 CSV)</span>
+
+<span class="c1"># After scaling 6 =&gt; 12 cores</span>
+<span class="c1"># Time Taken 23.35 seconds (1 CSV)</span>
+<span class="c1"># Time Taken 17.56 seconds (2 CSV)</span>
+<span class="k">print</span> <span class="s1">&#39;Time Taken &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39; seconds&#39;</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Time Taken 59.59 seconds
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">ntest</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt"></div>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/usr/lib/spark/python/pyspark/ml/classification.py:207: UserWarning: weights is deprecated. Use coefficients instead.
+  warnings.warn(&quot;weights is deprecated. Use coefficients instead.&quot;)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">pred</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;prediction = 1.0&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">test_df</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="s2">&quot;survived=1&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[11]:</div>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0.658456903370474</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="n">sc</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Step-2a">Step 2a<a class="anchor-link" href="#Step-2a">&#182;</a></h1><ul>
-<li>Login to AWS Console and choose Singapore region</li>
-</ul>
-<p><img src="images/Screen Shot 2016-03-07 at 8.41.22 pm.png" alt=""></p>
+<h1 id="Let's-resize-the-EMR-cluster">Let's resize the EMR cluster<a class="anchor-link" href="#Let's-resize-the-EMR-cluster">&#182;</a></h1><p>Increase core count to 4 and wait.</p>
+<p><img src="images/Screen Shot 2016-03-07 at 10.14.40 am.png" alt=""></p>
+<p>Once the cluster has been resized, go to YARN resource manager and observe the increased compute resources.</p>
 
 </div>
 </div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Step-2b">Step 2b<a class="anchor-link" href="#Step-2b">&#182;</a></h1><p>Have your AWS ACCESS KEY and ACCESS KEY ID ready. Otherwise, we will just create a new IAM user for this session.</p>
-<ul>
-<li>Create an user under the IAM service and not down the keys.</li>
-<li>Attach the AdministratorAccess Policy to this user</li>
-</ul>
-<p><img src="images/Screen Shot 2016-03-07 at 8.11.47 pm.png" alt=""></p>
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+
+<span class="n">time_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;6 core&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="mi">436</span><span class="p">,</span><span class="mi">227</span><span class="p">],</span> <span class="s1">&#39;12 cores&#39;</span> <span class="p">:</span> <span class="p">[</span><span class="mi">62</span><span class="p">,</span><span class="mi">17</span><span class="p">]},</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;read&#39;</span><span class="p">,</span><span class="s1">&#39;lr.fit&#39;</span><span class="p">])</span>
+<span class="n">time_df</span>
+</pre></div>
 
 </div>
 </div>
-</div></section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
 </div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area"><div class="prompt output_prompt">Out[19]:</div>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>12 cores</th>
+      <th>6 core</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>read</th>
+      <td>62</td>
+      <td>436</td>
+    </tr>
+    <tr>
+      <th>lr.fit</th>
+      <td>17</td>
+      <td>227</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="images/Screen Shot 2016-03-07 at 8.12.18 pm.png" alt=""></p>
+    <div class="input_area">
+<div class=" highlight hl-ipython2"><pre><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="n">time_df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+</pre></div>
 
 </div>
 </div>
-</div></section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="images/Screen Shot 2016-03-07 at 8.12.34 pm.png" alt=""></p>
-
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Step-2c">Step 2c<a class="anchor-link" href="#Step-2c">&#182;</a></h1><p>Do you have a key pair for your EC2 instances? Either create one or upload your existing public key under EC2 services. For Windows PuTTY users, you can read <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html">here</a>.</p>
-<p><img src="images/Screen Shot 2016-03-07 at 8.25.27 pm.png" alt=""></p>
-
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Step-2d">Step 2d<a class="anchor-link" href="#Step-2d">&#182;</a></h1><p>Export your <strong>AWS credentials</strong>, <strong>Key pair name</strong> and run my <strong>setup.sh</strong> script to create an EMR cluster of 1 Master + 2 Slaves using c3.xlarge instance type.</p>
-<p>The script will use Spot instances. The max bid price (Default is $0.01 above current spot price) can be configured in <code>conf/config</code>.</p>
-<p><font style="font-size: 80%;"></p>
-
-<pre><code>$ export AWS_SECRET_ACCESS_KEY=&lt;AWS_SECRET_ACCESS_KEY&gt;
-$ export AWS_ACCESS_KEY_ID=&lt;AWS_ACCESS_KEY_ID&gt;
-$ export AWS_KEY_PAIR_NAME=&lt;YOUR_AWS_KEY_PAIR_TO_USE&gt;
-
-$ cd smu-talk-8mar2016/bin
-$ ./setup.sh</code></pre>
-<p>&lt;/font&gt;</p>
-
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Step-3">Step 3<a class="anchor-link" href="#Step-3">&#182;</a></h1><ol>
-<li>Go to your AWS Web Console</li>
-<li>Under EMR service and find the EMR cluster</li>
-<li>Click on it and note down the Master public DNS name. The DNS name will not appear immediately until the cluster is up.</li>
-</ol>
-<p><img src="images/Screen Shot 2016-03-07 at 8.34.25 pm.png" alt=""></p>
-
-</div>
-</div>
-</div></section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="images/Screen Shot 2016-03-07 at 10.02.20 am.png" alt=""></p>
-
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Step-4">Step 4<a class="anchor-link" href="#Step-4">&#182;</a></h1><p>Configure your browser by enabling the web connection using a proxy. Follow the AWS instructions "Enable Web Connection".</p>
-<p><img src="images/Screen Shot 2016-03-07 at 10.02.20 am.png" alt=""></p>
-<p>After configuring, you will be able to view the various Hadoop services. Click on Resource Manager to view YARN resources.</p>
-<p><img src="images/Screen Shot 2016-03-07 at 10.17.52 am.png" alt=""></p>
-
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Step-5">Step 5<a class="anchor-link" href="#Step-5">&#182;</a></h1><p>Once the cluster is up (takes up to 10mins), login to master node.</p>
-
-<pre><code>$ ssh -i /path/to/your/private/key.pem hadoop@&lt;MASTER_PUBLIC_DNS&gt;</code></pre>
-<p>And run Jupyter:</p>
-
-<pre><code>$ ./start-jupyter.sh</code></pre>
-<p>You can now access Jupyter on <code>https://&lt;MASTER_PUBLIC_DNS&gt;:8888</code>. Password is sfvhxj7d</p>
-
-</div>
-</div>
-</div></section></section>
-</div>
 </div>
 
-<script>
+<div class="output_wrapper">
+<div class="output">
 
-require(
-    {
-      // it makes sense to wait a little bit when you are loading
-      // reveal from a cdn in a slow connection environment
-      waitSeconds: 15
-    },
-    [
-      "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.2.0/lib/js/head.min.js",
-      "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.2.0/js/reveal.js"
-    ],
 
-    function(head, Reveal){
+<div class="output_area"><div class="prompt output_prompt">Out[21]:</div>
 
-        // Full list of configuration options available here: https://github.com/hakimel/reveal.js#configuration
-        Reveal.initialize({
-            controls: true,
-            progress: true,
-            history: true,
 
-            theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
-            transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/none
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;matplotlib.axes._subplots.AxesSubplot at 0x1142087d0&gt;</pre>
+</div>
 
-            // Optional libraries used to extend on reveal.js
-            dependencies: [
-                { src: "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.2.0/lib/js/classList.js",
-                  condition: function() { return !document.body.classList; } },
-                { src: "https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.2.0/plugin/notes/notes.js",
-                  async: true,
-                  condition: function() { return !!document.body.classList; } }
-            ]
-        });
+</div>
 
-        var update = function(event){
-          if(MathJax.Hub.getAllJax(Reveal.getCurrentSlide())){
-            MathJax.Hub.Rerender(Reveal.getCurrentSlide());
-          }
-        };
+<div class="output_area"><div class="prompt"></div>
 
-        Reveal.addEventListener('slidechanged', update);
 
-        var update_scroll = function(event){
-          $(".reveal").scrollTop(0);
-        };
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXQAAAENCAYAAAAfTp5aAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
+AAALEgAACxIB0t1+/AAAGrlJREFUeJzt3X+QVOW95/H3B1AUYfi5MsDg4A80SBJJDOgNm0oTEwL+
+AKJZouhNImpZxcUkmtwIpAgdNZeLa7QSN1QSdC2CIotxN4JxA3pNpxITdL3AxfBD0XJGHJ0RlQQj
+CTLw3T/6OLeBwelhpm37zOdV1TVnnvOc7m/PjB8fnnP6PIoIzMys8nUrdwFmZtY5HOhmZinhQDcz
+SwkHuplZSjjQzcxSwoFuZpYSRQe6pG6SNkhalXy/QNLLktYnj0kFfedK2i5pq6SJpSjczMwO1qMd
+fb8ObAaqCtpuj4jbCztJGgVMB0YBNcBjkkaGL3g3MyupokbokmqA84G7Dt3VSvepwIqIaI6IOmA7
+MK4jRZqZWduKnXK5A/hn4NBR9mxJGyXdJalv0jYM2FHQpyFpMzOzEmoz0CVdADRFxEYOHpEvBk6J
+iDFAI/CD0pRoZmbFKGYOfTwwRdL5wPFAH0k/j4gvF/RZAqxOthuA4QX7apK2g0jynLqZ2VGIiNam
+u1F7zlVK+jTwzYiYIqk6IhqT9uuBsRExQ9KZwH3AOeSnWh4FDjspKsnnSTtRNpslm82Wuwyzw/hv
+s3NJOmKgt+cql0PdKmkMcACoA64FiIgtklYCW4B9wCwnt5lZ6bUr0CPit8Bvk+0vv0e/hcDCjpVm
+Zmbt4U+KpkQmkyl3CWat8t/m+6ddc+id+sKeQzcza7dSzaGbWcqNGDGC+vr6cpfRJdXW1lJXV9eu
+YzxCT4nqmmqaGprKXUabBg8bTOPLjeUuw4qUjAbLXUaXdKSf/XuN0B3oKSEJsuWuoghZHBAVxIFe
+PkcT6D4pamaWEg50M7OUcKCbmaWEA93M2qW6egSSSvaorh5RdC0//vGPGTt2LMcddxwzZ848aN+T
+Tz7JxIkTGThwIIMHD+ZLX/oSjY3pPiHvQDezdmlqqid/J+3SPPLPX5xhw4Yxf/58rrrqqsP27dq1
+i2uvvZb6+nrq6+vp3bs3V1555VG952Lt37+/pM/fFge6mVWsadOmMWXKFAYMGHDYvkmTJnHJJZfQ
+u3dvjjvuOGbPns0f/vCHIz7Xrl27mDlzJsOGDWPgwIFcfPHFLfuWLFnCyJEjGTRoENOmTePVV19t
+2detWzcWL17M6aefzumnnw7Atm3bWv51MGrUKB544IGW/o888gijR4+mqqqK4cOHc/vtBy361iEO
+dDPrEn77298yevToI+6/4oor+Nvf/sbWrVt57bXXuP766wF4/PHHmTdvHr/4xS949dVXOemkk7j0
+0ksPOvahhx7iqaeeYsuWLezZs4eJEydyxRVX8Prrr7NixQpmzZrFtm3bALj66qtZsmQJu3fv5k9/
++hOf+cxnOu09OtDNLPU2bdrEzTffzG233dbq/sbGRtasWcNPf/pTqqqq6N69O5/61KcAWL58OVdd
+dRVnnXUWxxxzDAsXLuSPf/wjL730Usvx8+bNo1+/fvTs2ZOHH36Yk08+mS9/+ctI4qyzzuKSSy5p
+GaUfe+yxbN68mbfeeou+ffsyZsyYTnufDnQzS7Xnn3+e888/nzvvvJNPfvKTrfbZsWMHAwYMoKqq
+6rB9r7zyCrW1tS3fn3DCCQwcOJCGhv9ct6empqZlu76+nnXr1jFgwAAGDBhA//79Wb58OU1N+U9y
+P/jgg/zqV7+itraWCRMmsG7dus56q76Xi5mlV319PZ/73OdYsGABM2bMOGK/4cOH8+abb7J79+7D
+Qn3o0KEH3c/m7bff5o033jgoxCUd9FyZTIY1a9a0+lpnn302v/zlL9m/fz933nkn06dPP2i03xEe
+oZtZxdq/fz9///vf2b9/P83Nzezdu7flSpOGhgbOO+88rrvuOq655pr3fJ7q6momT57MrFmz+POf
+/0xzczO/+93vALjsssu455572LRpE3v37mXevHmce+65DB8+vNXnuvDCC3nuuee49957aW5uZt++
+fTz99NNs27aNffv2sXz5cnbv3k337t3p06cP3bt377SfR9GBLqmbpPWSViXf95e0VtKzktZI6lvQ
+d66k7ZK2SprYadWamRW45ZZb6NWrF4sWLeK+++6jV69efP/73wfg7rvv5sUXXySbzVJVVUWfPn1a
+nVJ517Jly+jRowcf+tCHGDx4MD/84Q8BOO+887j55pu5+OKLGTZsGC+++CIrVqxoOa5wdA7Qu3dv
+1q5dy4oVKxg6dChDhw5lzpw5vPPOOy2vc/LJJ9OvXz9+9rOfsXz58k77eRR9c65k3dCzgapkTdFF
+wBsRcaukG4H+ETGnYE3RseQXiH4Mrylacr45l5VCazeIqq4e0a5rxdtr8OBaGhvrSvb8laJkN+eS
+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
+"
+>
+</div>
 
-        Reveal.addEventListener('slidechanged', update_scroll);
+</div>
 
-    }
-);
+</div>
+</div>
 
-</script>
-
+</div>
+    </div>
+  </div>
 </body>
-
 </html>
